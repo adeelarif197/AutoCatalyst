@@ -18,6 +18,7 @@ import Services from './src/home_screens/Services';
 import AvailableMechanics from './src/home_screens/AvailableMechanics';
 import MechanicView from './src/reuseables/MechanicView';
 import MechanicInfo from './src/home_screens/MechanicInfo';
+import Inquire from './src/home_screens/Inquire';
 // Libraries
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -61,6 +62,7 @@ const App = () => {
 				<Stack.Screen name="AvailableMechanics" component={AvailableMechanics} />
 				<Stack.Screen name="MechanicView" component={MechanicView} />
 				<Stack.Screen name="MechanicInfo" component={MechanicInfo} />
+				<Stack.Screen name="Inquire" component={Inquire} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

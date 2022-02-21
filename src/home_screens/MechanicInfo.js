@@ -4,7 +4,7 @@ import { primaryColor } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import StarRating from 'react-native-star-rating';
-
+   
 export default class MechanicInfo extends Component {
 	constructor(props) {
 		super(props);
@@ -157,6 +157,7 @@ export default class MechanicInfo extends Component {
 											borderRadius: 8,
 											backgroundColor: '#F9ECFF'
 										}}
+										onPress={()=>{this.props.navigation.navigate('Inquire')}}
 									>
 										<Text style={{ color: '#68397E', fontWeight: 'bold', fontSize: 15 }}>
 											Inquire

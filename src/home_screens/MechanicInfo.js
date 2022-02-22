@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList,SafeAreaView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, FlatList, SafeAreaView } from 'react-native';
 import { primaryColor } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import StarRating from 'react-native-star-rating';
-   
+
 export default class MechanicInfo extends Component {
 	constructor(props) {
 		super(props);
@@ -112,28 +112,36 @@ export default class MechanicInfo extends Component {
 							</View>
 							<View style={{ justifyContent: 'center', alignItems: 'center', top: 20 }}>
 								<Text style={{ fontSize: 15, letterSpacing: 1, color: 'black', fontWeight: 'bold' }}>
-									Beshir Mechanic
+									Bashir Mechanic
 								</Text>
 
-								<Text style={{ fontSize: 15, letterSpacing: 0.5, color: 'dark-grey', top: 10 }}>
-									Orders --------------------------------------- 23 {'\n'}
+								<Text style={{ fontSize: 15, letterSpacing: 0.5, color: 'grey', top: 10 }}>
+									Orders --------------------------------- 23 {'\n'}
 									{'\n'}
 									Completed --------------------------------- 21{'\n'}
-									{'\n'}Pending ------------------------------------- 02
+									{'\n'}Pending ---------------------------------- 02
 								</Text>
 							</View>
 						</View>
-						<View style={{ zIndex: 10, width: '50%', flexDirection: 'row' }}>
+
+						<View
+							style={{
+								flexDirection: 'row',
+								top: '13%',
+								justifyContent: 'space-between',
+								paddingHorizontal: 35
+							}}
+						>
 							<StarRating
 								disabled={false}
 								maxStars={5}
 								starSize={20}
 								halfStarEnabled={true}
-								containerStyle={{ marginHorizontal: '28%', top: 40 }}
+								containerStyle={{}}
 								starStyle={{ color: 'orange' }}
 							/>
-							<View style={{ marginHorizontal: '40%', top: 40 }}>
-								<Text style={{ fontSize: 15, color: 'dark-grey', left: 17 }}>4.5</Text>
+							<View style={{}}>
+								<Text style={{ fontSize: 15, color: 'grey' }}>4.5</Text>
 							</View>
 						</View>
 
@@ -143,8 +151,8 @@ export default class MechanicInfo extends Component {
 									marginBottom: 20,
 									flexDirection: 'row',
 									alignItems: 'center',
-									justifyContent: 'space-between',
-									marginHorizontal: 20,
+									justifyContent: 'space-around',
+									marginHorizontal: 10,
 									marginTop: 55
 								}}
 							>
@@ -152,12 +160,14 @@ export default class MechanicInfo extends Component {
 									<TouchableOpacity
 										style={{
 											padding: 15,
-											paddingLeft: 50,
-											paddingRight: 50,
+											paddingLeft: 45,
+											paddingRight: 45,
 											borderRadius: 8,
 											backgroundColor: '#F9ECFF'
 										}}
-										onPress={()=>{this.props.navigation.navigate('Inquire')}}
+										onPress={() => {
+											this.props.navigation.navigate('Inquire');
+										}}
 									>
 										<Text style={{ color: '#68397E', fontWeight: 'bold', fontSize: 15 }}>
 											Inquire
@@ -166,15 +176,17 @@ export default class MechanicInfo extends Component {
 								</View>
 
 								<View>
-									<TouchableOpacity 
+									<TouchableOpacity
 										style={{
 											padding: 15,
-											paddingLeft: 50,
-											paddingRight: 50,
+											paddingLeft: 45,
+											paddingRight: 45,
 											borderRadius: 8,
 											backgroundColor: '#68397E'
 										}}
-										onPress={()=>{this.props.navigation.navigate('BookingMechanic')}}
+										onPress={() => {
+											this.props.navigation.navigate('BookingMechanic');
+										}}
 									>
 										<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>
 											Booking

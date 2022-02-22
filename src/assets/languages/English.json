@@ -53,5 +53,8 @@
     "noSlot": "No time slot found",
     "timeSlotTitle": "Select a suitable time slot for delivery",
     "logoutPrompt": "Are you sure you want to logout?",
-    "inquire": "Inquiring Bashir Mechanic"
+    "inquire": "Inquiring Bashir Mechanic",
+    "booking": "Booking Bashir Mechanic",
+    "selectime": "Select Times Period"
+
 }

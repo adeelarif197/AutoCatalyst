@@ -1,76 +1,89 @@
-import { Text, View,StyleSheet,SafeAreaView, TouchableOpacity} from 'react-native'
-import React, { Component } from 'react'
-import Arrow from 'react-native-vector-icons/AntDesign'
-import SwitchSelector from "react-native-switch-selector";
-import HireNow from './HireNow';
-const options = [
-    { label: "Schedule", value: "1" },
-    { label: "Hire Now", value: "2" },
-  ];
-export default class BookingMechanic extends Component {
-  render() {
-    return (
-        //Header//
-      <SafeAreaView style={{flex:1}}>
-          <View style={styles.HeaderView}>
-          <TouchableOpacity>
-          <Arrow name='arrowleft' size={25}/>
-        </TouchableOpacity>   
-          <Text style={styles.TextStyle}>Booking Bashir Mechanic</Text> 
-        </View>
-        <View>
-        <SwitchSelector
-  initial={0}
-  textColor={'black'} //'#7a44cf'
-  selectedColor={'#68397E'}
-  buttonColor={'#68397E'}
-  borderColor={'#68397E'}
-  hasPadding
-  options={[
-    { label: "Schedule", value: "1",  }, //images.feminino = require('./path_to/assets/img/feminino.png')
-    { label: "Hire Now", value: "2", } //images.masculino = require('./path_to/assets/img/masculino.png')
-  ]}
-  style={styles.switchstyle}
-/>
-<View style={{marginTop:'35%'}}>
-<HireNow/>
-</View>
-</View>
+import { Text, View, Image } from 'react-native';
+import { container, headings, primaryColor, colors } from '../utils/Styles';
+import IconHeader from '../reuseables/IconHeader';
+import languages from '../assets/languages/English.json';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import SwitchSelector from 'react-native-switch-selector';
+import React from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useState } from 'react';
+function BookingMechanic() {
+	const [ open, setOpen ] = useState(false);
+	const [ value, setValue ] = useState(null);
+	const [ items, setItems ] = useState([
+		{ label: '9 AM to 11 AM', value: '9to11' },
+		{ label: '11 AM to 1 PM', value: '11to1' },
+		{ label: '1 PM to 3 PM', value: '1to3' },
+		{ label: '3 PM to 5 PM', value: '3to5' },
+		{ label: '5 PM to 7 PM', value: '5to7' }
+	]);
 
-        
-      </SafeAreaView>
-    )
-  }
+	return (
+		<View style={{ flex: 1, backgroundColor: 'white' }}>
+			<View style={{ flexDirection: 'row', padding: 20 }}>
+				<IconHeader
+					onleftPress={() => {
+						this.props.navigation.navigate('MechanicInfo');
+					}}
+					leftBtn={<AntDesign size={25} name="arrowleft" color={primaryColor} />}
+				/>
+				<Text style={{ ...headings.h5M, color: primaryColor, top: 5, left: 10 }}>{languages.booking}</Text>
+			</View>
+
+			<View style={{ paddingVertical: 20 }}>
+				<SwitchSelector
+					initial={0}
+					onPress={(value) => this.setState({ gender: value })}
+					selectedColor={'white'}
+					buttonColor={'#68397E'}
+					backgroundColor={'#F9ECFF'}
+					hasPadding={true}
+					height={50}
+					borderRadius={7}
+					style={{ marginHorizontal: 30 }}
+					options={[ { label: 'Hire now', value: 'h' }, { label: 'Schedule', value: 's' } ]}
+				/>
+			</View>
+			<View style={{ marginLeft: '5%', marginTop: '10%' }}>
+				<Text style={{ ...headings.h6, color: 'black' }}>{languages.selectime}</Text>
+			</View>
+
+			<View>
+				<DropDownPicker
+					open={open}
+					value={value}
+					items={items}
+					setOpen={setOpen}
+					setValue={setValue}
+					setItems={setItems}
+					placeholder="9AM to 11AM"
+					placeholderStyle={{
+						color: 'grey',
+						fontWeight: 'bold',
+						textAlign: 'center'
+					}}
+					containerStyle={{
+						paddingHorizontal: 20,
+						flex: 1,
+						elevation: 5,
+						marginTop: '5%',
+			
+					}}
+					style={{
+						borderRadius: 0,
+            borderWidth:0, 
+            elevation:5,
+					}}
+					textStyle={{
+						fontSize: 15,
+						color: 'grey',
+						fontWeight: 'bold',
+						textAlign: 'center'
+					}}
+					maxHeight={200}
+				/>
+			</View>
+		</View>
+	);
 }
-const styles=StyleSheet.create({
-    HeaderView:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginRight:'25%',
-        marginLeft:'4%',
-        marginTop:'3%'
-
-
-    },
-    TextStyle:{
-        fontSize:20
-    },
-    SwitchView:{
-        borderRadius:1,
-        flexDirection:'row',
-        justifyContent:'center',
-        marginTop:'8%',
-        justifyContent:'space-between',
-        marginLeft:'32%',
-        marginRight:'32%'
-        
-    },
-    switchstyle:{
-        padding:'6%',
-        // borderRadius:-20,
-        // backgroundColor:'red'
-        
-    }
-
-
-})
+export default BookingMechanic;

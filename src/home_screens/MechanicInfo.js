@@ -166,7 +166,7 @@ export default class MechanicInfo extends Component {
 								</View>
 
 								<View>
-									<TouchableOpacity onPress={this.props.navigation.navigate('BookingMechanic')}
+									<TouchableOpacity 
 										style={{
 											padding: 15,
 											paddingLeft: 50,
@@ -174,6 +174,7 @@ export default class MechanicInfo extends Component {
 											borderRadius: 8,
 											backgroundColor: '#68397E'
 										}}
+										onPress={()=>{this.props.navigation.navigate('BookingMechanic')}}
 									>
 										<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>
 											Booking

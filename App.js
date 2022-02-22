@@ -63,6 +63,7 @@ const App = () => {
 				<Stack.Screen name="AvailableMechanics" component={AvailableMechanics} />
 				<Stack.Screen name="MechanicView" component={MechanicView} />
 				<Stack.Screen name="MechanicInfo" component={MechanicInfo} />
+				<Stack.Screen name="Inquire" component={Inquire} />
 				<Stack.Screen name="BookingMechanic" component={BookingMechanic} />
 			</Stack.Navigator>
 		</NavigationContainer>

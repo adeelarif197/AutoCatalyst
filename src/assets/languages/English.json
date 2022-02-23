@@ -55,6 +55,8 @@
     "logoutPrompt": "Are you sure you want to logout?",
     "inquire": "Inquiring Bashir Mechanic",
     "booking": "Booking Bashir Mechanic",
-    "selectime": "Select Times Period"
+    "selectime": "Select Times Period",
+    "description": "Description",
+    "proceed": "Proceed to Checkout"
 
 }

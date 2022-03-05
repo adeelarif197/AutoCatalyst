@@ -27,7 +27,6 @@ export default class Mycheckbox extends Component {
                     unfillColor="#FFFFFF"
                     text={this.props.text}
                     iconStyle={{ borderColor: primaryColor, borderRadius: 2, borderWidth: 2, width: 18, height: 18 }}
-                    disableBuiltInState
                     textStyle={{
                        
                         textAlign:'justify',

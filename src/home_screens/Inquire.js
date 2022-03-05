@@ -5,10 +5,11 @@ import languages from '../assets/languages/English.json';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import React, { useState, useCallback, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Inquire() {
 	const [ messages, setMessages ] = useState([]);
-
+	const navigation = useNavigation();
 	useEffect(() => {
 		setMessages([
 			{
@@ -29,12 +30,12 @@ export default function Inquire() {
 	}, []);
 
 	return (
+	
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<View style={{ flexDirection: 'row', padding: 20 }}>
 				<IconHeader
 					onleftPress={() => {
-                    
-						this.props.navigation.navigate('MechanicInfo');
+					navigation.goBack();
 					}}
 					leftBtn={<AntDesign size={25} name="arrowleft" color={primaryColor} />}
 				/>
@@ -43,6 +44,7 @@ export default function Inquire() {
 
 			<GiftedChat
 				messages={messages}
+				textInputStyle={{ color: 'black' }}
 				onSend={(messages) => onSend(messages)}
 				user={{
 					_id: 1

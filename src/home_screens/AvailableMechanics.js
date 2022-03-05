@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList,SafeAreaView} from 'react-native';
+import { Text, View, TouchableOpacity, Image, FlatList,SafeAreaView, ScrollView} from 'react-native';
 import { primaryColor } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -75,20 +75,14 @@ export default class AvailableMechanics extends Component {
 					level: 'Skill level',
 					image: require('../assets/images/Avatar.png')
 				},
-				{
-					id: 10,
-					name: 'Bashir Mechanic',
-					experience: '2 years',
-					level: 'Skill level',
-					image: require('../assets/images/Avatar.png')
-				}
+			
 			]
 		};
 	}
 
 	ProductsView = (props) => {
 		return (
-			<View style={{ flex: 1, backgroundColor: 'white', top: 10, marginBottom: 10 }}>
+			<View style={{ flex: 1, backgroundColor: 'white', top: 10, marginBottom: 10,   }}>
 				<TouchableOpacity
 					onPress={() => {this.props.navigation.navigate('MechanicInfo')}}
 					style={{ backgroundColor: '#F9ECFF', marginHorizontal: 20, borderRadius: 8, paddingVertical: 30 }}
@@ -128,6 +122,7 @@ export default class AvailableMechanics extends Component {
 	render() {
 		const { Data } = this.state;
 		return (
+			<ScrollView>
 			<SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
 				<IconHeader
 					onleftPress={() => {
@@ -151,6 +146,7 @@ export default class AvailableMechanics extends Component {
 					<FlatList horizontal={false} renderItem={this.ProductsView} data={Data} />
 				</View>
 			</SafeAreaView>
+			</ScrollView>
 		);
 	}
 }

@@ -8,14 +8,82 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { InputField } from '../reuseables/InputField';
 import Btn1 from '../reuseables/Btn1';
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const myref = React.createRef();
 export default class Login extends Component {
 	state = {
 		email: '',
 		password: '',
-
+		Pass: '',
+		showPassword: true,
+		emailError: '',
+		isValid: false,
+		passwordErrorMessage: '', // password error message
+		loading: false,
+		authUserID: '',
 		isSubmitting: false
+	};
+
+	storeData = async () => {
+		try {
+			const jsonID = JSON.stringify(this.state.authUserID);
+			const jsonEmail = JSON.stringify(this.state.email);
+			const jsonPassword = JSON.stringify(this.state.Pass);
+
+			await AsyncStorage.setItem('@IDSession', jsonID);
+			console.log('SessionID Stored: ', JSON.parse(jsonID));
+
+			await AsyncStorage.setItem('@emailSession', jsonEmail);
+			console.log('SessionEmail Stored: ', JSON.parse(jsonEmail));
+
+			await AsyncStorage.setItem('@passwordSession', jsonPassword);
+			console.log('SessionPassword Stored: ', JSON.parse(jsonPassword));
+			this.props.navigation.navigate('Services');
+		} catch (e) {
+			// saving error
+		}
+	};
+
+	getFirestorData = () => {
+		firestore()
+			.collection('Users')
+			.where('email', '==', this.state.email)
+			.where('password', '==', this.state.Pass.toString())
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((documentSnapshot) => {
+					console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+					this.setState({ authUserID: documentSnapshot.id });
+				});
+
+				if (querySnapshot.size == 0) {
+					alert('please enter valid credentials');
+					console.log('if: ', querySnapshot.size);
+				} else {
+					this.storeData();
+					console.log('Total users: ', querySnapshot.size);
+				}
+			})
+			.catch((err) => alert('No Record Found'));
+	};
+
+	handleValidation = () => {
+		const { email, Pass } = this.state;
+		if (email == '' || Pass == '') {
+			alert('All fields are required');
+			return;
+		}
+		if (email != '' && Pass != '') {
+			this.getFirestorData();
+		}
+		if (Pass.length < 5) {
+			alert('password lenght must be 6 charater long');
+			return;
+		}
 	};
 
 	toggleSecure = () => {
@@ -27,10 +95,12 @@ export default class Login extends Component {
 		return (
 			<View style={container.empty}>
 				<IconHeader
-					onleftPress={() => { 
+					onleftPress={() => {
 						this.props.navigation.goBack();
 					}}
-					leftBtn={<AntDesign size={25} name="arrowleft" color={primaryColor} style={{left:20, top:20}}/>}
+					leftBtn={
+						<AntDesign size={25} name="arrowleft" color={primaryColor} style={{ left: 20, top: 20 }} />
+					}
 				/>
 				<ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
 					<View style={{ alignItems: 'center', marginVertical: 5 }}>
@@ -42,7 +112,8 @@ export default class Login extends Component {
 							keyboardType="email-address"
 							lable="Email"
 							icon={<Fontisto name="email" size={20} color={Colors.gray} />}
-							// onChange={(txt) => this.setState({ email: txt })}
+							value={this.state.email}
+							onChange={(txt) => this.setState({ email: txt })}
 						/>
 
 						<InputField
@@ -51,7 +122,8 @@ export default class Login extends Component {
 							isSecure={true}
 							lable="Password"
 							icon={<Entypo name="eye" size={20} color={Colors.gray} />}
-							// onChange={(txt) => this.setState({ password: txt })}
+							value={this.state.Pass}
+							onChange={(txt) => this.setState({ Pass: txt })}
 						/>
 
 						<TouchableOpacity
@@ -68,7 +140,10 @@ export default class Login extends Component {
 							<Btn1
 								lableStyle={{ ...headings.h6M, color: white }}
 								lable={languages.login}
-								onPress={() => this.props.navigation.navigate('Services')}
+								// onPress={() => alert('asdfasdfasdf')}
+								onPress={() => this.handleValidation()}
+
+								// onPress={() => this.props.navigation.navigate('Services')}
 							/>
 						</View>
 					</View>

@@ -10,20 +10,60 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { InputField } from '../reuseables/InputField';
 import Btn1 from '../reuseables/Btn1';
 import Mycheckbox from '../reuseables/Mycheckbox';
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const myref = React.createRef();
 const myref1 = React.createRef();
 
 export default class Registration extends Component {
 	state = {
-		fName: '',
-		lName: '',
-		email: '',
-		password: '',
+		firstname: '',
+		lastname: '',
+		Pass: '',
 		confirmPassword: '',
-
+		showPassword: true,
+		password: '',
+		email: '',
+		Text: '',
 		isSubmitting: false,
 		isPolicyChecked: false
+	};
+
+	PostDataToFirebase = () => {
+		firestore().collection('Users').add({
+			firstname: this.state.firstname,
+			lastname: this.state.lastname,
+			email: this.state.email,
+			password: this.state.Pass,
+			cpassword: this.state.confirmPassword,
+			
+		});
+
+		this.props.navigation.replace('Services');
+		alert('SignUp Successfully');
+	};
+
+	signUpValidation = () => {
+		const { email, Pass } = this.state;
+		if (email == '' || Pass == '') {
+			alert('All fields are required');
+			return;
+		} else if (email != '' && email.includes('@gmail.com') && Pass != '') {
+			this.PostDataToFirebase();
+		} else {
+			// } else if (Pass ){
+			//   alert('password lenght must be 8 charaters long');
+			//   return;
+			// }
+			// else if (Pass.length <= 8 ) {
+			//   alert('password lenght must be 8 charaters long');
+			//   return;
+			// }
+			alert('Not a valid email');
+			return;
+		}
 	};
 
 	toggleSecure = (ref) => {
@@ -38,7 +78,9 @@ export default class Registration extends Component {
 					onleftPress={() => {
 						this.props.navigation.goBack();
 					}}
-					leftBtn={<AntDesign size={25} name="arrowleft" color={primaryColor} style={{left:20, top:20}}/>}
+					leftBtn={
+						<AntDesign size={25} name="arrowleft" color={primaryColor} style={{ left: 20, top: 20 }} />
+					}
 				/>
 				<ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
 					<View style={{ alignItems: 'center', marginVertical: 5 }}>
@@ -49,15 +91,17 @@ export default class Registration extends Component {
 						<InputField
 							lable={languages.firstname}
 							icon={<Feather name="user" size={20} color={Colors.gray} />}
+							value={this.state.firstname}
 							onChange={(txt) => {
-								this.setState({ fName: txt });
+								this.setState({ firstname: txt });
 							}}
 						/>
 						<InputField
 							lable={languages.lastname}
 							icon={<Feather name="user" size={20} color={Colors.gray} />}
+							value={this.state.lastname}
 							onChange={(txt) => {
-								this.setState({ lName: txt });
+								this.setState({ lastname: txt });
 							}}
 						/>
 
@@ -65,6 +109,7 @@ export default class Registration extends Component {
 							keyboardType="email-address"
 							lable="Email Address"
 							icon={<Fontisto name="email" size={20} color={Colors.gray} />}
+							value={this.state.email}
 							onChange={(txt) => {
 								this.setState({ email: txt });
 							}}
@@ -78,8 +123,9 @@ export default class Registration extends Component {
 							isSecure={true}
 							lable="Password"
 							icon={<Feather name="lock" size={20} color={Colors.gray} />}
+							value={this.state.Pass}
 							onChange={(txt) => {
-								this.setState({ password: txt });
+								this.setState({ Pass: txt });
 							}}
 						/>
 
@@ -87,9 +133,9 @@ export default class Registration extends Component {
 							isSecure={true}
 							ref={myref}
 							oniconPress={() => this.toggleSecure(myref)}
-							isSecure={true}
 							lable="Confirm Password"
 							icon={<Feather name="lock" size={20} color={Colors.gray} />}
+							value={this.state.confirmPassword}
 							onChange={(txt) => {
 								this.setState({ confirmPassword: txt });
 							}}
@@ -105,15 +151,13 @@ export default class Registration extends Component {
 						</View>
 
 						<View style={{ marginBottom: 20, marginTop: 30 }}>
-						
-								<Btn1
-									lableStyle={{ ...headings.h6M, color: white }}
-									lable={languages.register}
-									onPress={() => {
-										this.props.navigation.navigate('Zunair');
-									}}
-								/>
-							
+							<Btn1
+								lableStyle={{ ...headings.h6M, color: white }}
+								lable={languages.register}
+								onPress={() => {
+									this.signUpValidation()
+								}}
+							/>
 						</View>
 					</View>
 				</ScrollView>

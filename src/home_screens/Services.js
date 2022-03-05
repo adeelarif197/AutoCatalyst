@@ -10,7 +10,7 @@ export default class Services extends Component {
 			<SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
 				<IconHeader
 					onleftPress={() => {
-						this.props.navigation.goBack();
+					
 					}}
 					leftBtn={
 						<FontAwesome5
@@ -29,8 +29,8 @@ export default class Services extends Component {
 						We are glad to see you!
 					</Text>
 				</View>
-				<View style={{ height: '10%', marginTop: '5%', alignItems: 'center' }}>
-					<Text style={{ fontSize: 18, fontWeight: 'bold', letterSpacing: 0.8, color: 'black' }}>
+				<View style={{ height: '10%', marginTop: '10%', alignItems: 'center' }}>
+					<Text style={{ fontSize: 20, fontWeight: 'bold', letterSpacing: 0.8, color: 'black' }}>
 						What type of Vehicle Services
 					</Text>
 					<Text style={{ fontSize: 18, fontWeight: 'bold', letterSpacing: 1, color: 'black' }}>
@@ -39,7 +39,7 @@ export default class Services extends Component {
 				</View>
 
 				<ScrollView
-					contentContainerStyle={{ flexGrow: 1 }}
+				style={{ flex: 1}}
 					showsVerticalScrollIndicator={false}
 					bouncesZoom={true}
 				>
@@ -93,7 +93,7 @@ export default class Services extends Component {
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						onPress={() => {
 							this.props.navigation.navigate('AvailableMechanics');
 						}}
@@ -108,7 +108,7 @@ export default class Services extends Component {
 						<View style={{ alignSelf: 'center' }}>
 							<Image source={require('../assets/images/services1.png')} />
 						</View>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</ScrollView>
 			</SafeAreaView>
 		);

@@ -7,7 +7,7 @@ import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Image } from 'rea
 import languages from '../assets/languages/English.json';
 import { Colors, headings, primaryColor, secondryColor, white, container, textColor, form } from '../utils/Styles';
 import Btn1 from '../reuseables/Btn1';
-import SuccessfulView from './SuccessfulView';
+// import SuccessfulView from './SuccessfulView';
 import IconHeader from '../reuseables/IconHeader';
 
 const myref1 = React.createRef();
@@ -80,8 +80,8 @@ export default class OTPScreen extends Component {
 					</View>
 				</ScrollView>
 
-				<ReactModal ref={modalRef} view={<SuccessfulView msg1={languages.OTPverified} />} />
-				<ReactModal ref={modalRef1} view={<SuccessfulView msg1={languages.wesendotp} />} />
+				{/* <ReactModal ref={modalRef} view={<SuccessfulView msg1={languages.OTPverified} />} /> */}
+				{/* <ReactModal ref={modalRef1} view={<SuccessfulView msg1={languages.wesendotp} />} /> */}
 			</View>
 		);
 	}

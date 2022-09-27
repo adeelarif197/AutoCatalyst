@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-const primaryColor = '#68397E'
+const primaryColor = '#198754'
 const secondryColor = '#FFFFFF'
 const textColor = "#606060"
 const textColorDim = "#BBBBBB"

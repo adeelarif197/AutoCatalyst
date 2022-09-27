@@ -3,7 +3,7 @@ import { ScrollView, Text, View, Image, } from 'react-native';
 import IconHeader from '../reuseables/IconHeader';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { primaryColor, container, headings, Colors, white } from '../utils/Styles';
+import { primaryColor, container, headings, Colors, white ,textColorDim} from '../utils/Styles';
 import languages from '../assets/languages/English.json';
 import Btn1 from '../reuseables/Btn1';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -28,13 +28,16 @@ export default class ForgotPassword extends Component {
 				/>
 				<ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
 					<View style={{ paddingVertical: 20, alignItems: 'center' }}>
-					<Image source={require('../assets/images/ForgotPass.png')} />
+					<Image source={require('../assets/images/Frame.png')} />
+					<Text style={{ ...headings.h6, color: textColorDim, textAlign: 'center', width:'80%'}}>
+					Enter your registered Phone to get a Reset link and create new password. 
+							</Text>
 					</View>
 					<View style={{ marginBottom: 15 }}>
 						<InputField
-							keyboardType="email-address"
-							lable="Email"
-							icon={<Fontisto name="email" size={20} color={Colors.gray} />}
+							// keyboardType="email-address"
+							lable="Phone Number"
+							icon={<Fontisto name="phone" size={20} color={Colors.gray} />}
 							onChange={(txt) => this.setState({ email: txt })}
 						/>
 

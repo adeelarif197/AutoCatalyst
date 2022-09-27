@@ -48,28 +48,7 @@ export default class Login extends Component {
 		}
 	};
 
-	getFirestorData = () => {
-		firestore()
-			.collection('Users')
-			.where('email', '==', this.state.email)
-			.where('password', '==', this.state.Pass.toString())
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((documentSnapshot) => {
-					console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-					this.setState({ authUserID: documentSnapshot.id });
-				});
-
-				if (querySnapshot.size == 0) {
-					alert('please enter valid credentials');
-					console.log('if: ', querySnapshot.size);
-				} else {
-					this.storeData();
-					console.log('Total users: ', querySnapshot.size);
-				}
-			})
-			.catch((err) => alert('No Record Found'));
-	};
+	
 
 	handleValidation = () => {
 		const { email, Pass } = this.state;
@@ -109,9 +88,9 @@ export default class Login extends Component {
 
 					<View>
 						<InputField
-							keyboardType="email-address"
-							lable="Email"
-							icon={<Fontisto name="email" size={20} color={Colors.gray} />}
+							// keyboardType="numb"
+							lable="Phone Nymber"
+							icon={<Fontisto name="phone" size={20} color={Colors.gray} />}
 							value={this.state.email}
 							onChange={(txt) => this.setState({ email: txt })}
 						/>
@@ -131,7 +110,7 @@ export default class Login extends Component {
 								this.props.navigation.navigate('ForgotPassword');
 							}}
 						>
-							<Text style={{ ...headings.h7M, color: primaryColor, textAlign: 'center' }}>
+							<Text style={{ ...headings.h6, color: primaryColor, textAlign: 'center',}}>
 								{languages.forgetpass}
 							</Text>
 						</TouchableOpacity>
@@ -141,9 +120,9 @@ export default class Login extends Component {
 								lableStyle={{ ...headings.h6M, color: white }}
 								lable={languages.login}
 								// onPress={() => alert('asdfasdfasdf')}
-								onPress={() => this.handleValidation()}
+								// onPress={() => }
 
-								// onPress={() => this.props.navigation.navigate('Services')}
+								onPress={() => this.props.navigation.navigate('Home')}
 							/>
 						</View>
 					</View>

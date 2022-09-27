@@ -4,50 +4,56 @@ import React, { Component } from 'react';
 
 export default class OnBoardingScreens extends Component {
 	render() {
-		var { width } = Dimensions.get('window');
+		var { width , height } = Dimensions.get('window');
 		const navigation = this.props.navigation;
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1,justifyContent:'flex-start' }}>
 				<Onboarding
 					bottomBarHighlight={false}
-					onSkip={() => navigation.replace('WelcomeScreen')}
-					onDone={() => navigation.replace('WelcomeScreen')}
+					onSkip={() => navigation.replace('Login')}
+					onDone={() => navigation.replace('Login')}
 					pages={[
 						{
-							backgroundColor: '#EFCDFF',
+							backgroundColor: 'white',
+							
+							title: 'Explore and Track',
+							subtitle: 'Access a never ending database of Catalytic Converters & monitor their prices.',
 							image: (
 								<Image
-									source={require('../assets/images/Frame1.png')}
-									style={{ marginTop: '10%', width: width * 0.9 }}
+									source={require('../assets/images/S1.png')}
+									style={{ width: width * 0.9, height: height * 0.5}}
+									resizeMode="contain"
 								/>
 							),
-							title: 'Stuck in a vehicle problem? We got you! Sit back, Relax & let us fix your vehicle.',
-							subtitle: '',
-							titleStyles: { fontSize: 18, fontWeight: 'bold', color: 'black', textAlign: 'center' },
+							titleStyles: { fontSize: 18, fontWeight: 'bold', color: '#198754', textAlign: 'center' },
 						},
 						{
-							backgroundColor: '#EFCDFF',
+							backgroundColor: 'white',
 							image: (
 								<Image
-									source={require('../assets/images/Frame2.png')}
-									style={{ marginTop: '10%', width: width * 0.9 }}
+									source={require('../assets/images/S2.png')}
+									style={{width: width * 0.9, height: height * 0.5}}
+									resizeMode="contain"
+								
 								/>
 							),
-							title: 'Contact us in case of any time, our professional team will assist you with best services.',
-							subtitle: '',
-							titleStyles: { fontSize: 18, fontWeight: 'bold', color: 'black', textAlign: 'center' }
+							title: 'Get In-depth Cat Details',
+							subtitle: 'You get the most in-depth details about the catalytic converter that you look for.',
+							titleStyles: { fontSize: 18, fontWeight: 'bold', color: '#198754', textAlign: 'center' }
 						},
 						{
-							backgroundColor: '#EFCDFF',
+							backgroundColor: 'white',
 							image: (
 								<Image
-									source={require('../assets/images/Frame3.png')}
-									style={{ marginTop: '10%', width: width * 0.9 }}
+									source={require('../assets/images/S3.png')}
+									style={{width: width * 0.9, height: height * 0.5}}
+									resizeMode="contain"
+								
 								/>
 							),
-							title: 'We provide solutions for you on the go...',
-							subtitle: '',
-							titleStyles: { fontSize: 18, fontWeight: 'bold', color: 'black', textAlign:'justify' },
+							title: 'Quick, Easy & Reliable',
+							subtitle: 'Cat Price ensures the usability to be easy and secure to provide you the best Cat market experience.',
+							titleStyles: { fontSize: 18, fontWeight: 'bold', color: '#198754', textAlign:'justify' },
                             
 						}
 					]}

@@ -6,7 +6,7 @@ class Splash extends Component {
 	constructor(props) {
 		super(props);
 		setTimeout(() => {
-			this.props.navigation.navigate('OnBoardingScreens');
+			this.props.navigation.replace('OnBoardingScreens');
 		}, 2000);
 	}
 	render() {

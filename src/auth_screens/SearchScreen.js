@@ -1,83 +1,101 @@
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Image } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { InputField } from '../reuseables/InputField';
 import { useNavigation } from '@react-navigation/native';
+import { headings, primaryColor, white } from '../utils/Styles';
+import IconHeader from '../reuseables/IconHeader';
 
 export default function SearchScreen() {
     const navigation = useNavigation();
+
+
+
+    ///////////Temporary Object for the Product Lists
     const [searchData, setSearchData] = useState([
         {
             id: 1,
-            name: '123 123 453',
+            name: 'CAT-0043',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Audi.png')
         },
         {
             id: 2,
-            name: '123 456 786',
+            name: 'CAT 0647',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Honda.png')
         },
         {
             id: 3,
-            name: '123 324 234',
+            name: 'CAT 131 ER-01',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/BMW.png')
         },
         {
             id: 4,
-            name: '23 233 234',
+            name: 'CAT 131 ER-23',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Nissan.png')
         },
         {
             id: 5,
-            name: '123 345 653',
+            name: 'CAT 0642',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Mitsubishi.png')
         },
         {
             id: 6,
-            name: '123 345 563',
+            name: 'CAT 129L',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Hyundai.png')
         },
         {
             id: 7,
-            name: '123 232 234',
+            name: 'CATCZ7458',
             
-            image: require('../assets/images/Avatar.png')
+            image: require('../assets/images/Chevrolet.png')
         },
-        {
-            id: 8,
-            name: '123 345 123',
+        // {
+        //     id: 9,
+        //     name: '897 123 312',
             
-            image: require('../assets/images/Avatar.png')
-        },
-        {
-            id: 9,
-            name: '897 123 312',
-            
-            image: require('../assets/images/Avatar.png')
-        },
+        //     image: [
+        //         {
+        //             src:require('../assets/images/Avatar.png')
+        //         },
+        //         {
+        //             src:require('../assets/images/Avatar.png')
+        //         },
+        //         {
+        //             src:require('../assets/images/Avatar.png')
+        //         }
+        //     ]
+        // },
     ]);
+
+    ////////states for searching Data
     const [searchTxt, setSearchTxt] = useState('');
     const [filterData, setFilterData] = useState('');
 
+
+
+    ////////////Component for Product in list
     const ProductsView = (props) => {
+        const Images = props.item.image.src
 		return (
-			<View style={{  alignSelf:'center' ,flex:1,width:'100%',marginVertical:'4%'}}>
+			<View style={styles.ProductView}>
 				<TouchableOpacity
-					onPress={() => {navigation.navigate('MyTabs')}}
+					onPress={() => {navigation.navigate('Login')}}
 					style={{  }}
 				>
 					<View style={{ flexDirection: 'row' }}>
-						<View style={{ alignItems: 'flex-start', left: 10 }}>
-							<Image style={{width:50,height:30}} resizeMode='stretch' source={require('../assets/images/VehicleLogo.png')} />
+						<View style={styles.productLogoContainer}>
+							<Image style={styles.productLogo} resizeMode='stretch' source={props.item.image} />
+                            
+                             
 						</View>
 
-						<Text style={{ alignSelf:'center',left: 30, fontSize: 15, letterSpacing: 0.5, color: 'black' }}>
+						<Text style={styles.productName}>
 							{props.item.name}
 						</Text>
 					</View>
@@ -87,6 +105,8 @@ export default function SearchScreen() {
 		);
 	};
 
+
+    ///////////Filter list when user inputs on the search
     useEffect(() => {
       console.log('Here Updated')
      const data = searchData.filter(function(item){
@@ -99,29 +119,90 @@ export default function SearchScreen() {
     
 
   return (
-    <SafeAreaView style={{flex:1,paddingHorizontal:'2%',paddingTop:'4%',backgroundColor:'white'}}>
-      <View>
-      <Ionicons name="chevron-back" size={25} color={"#5E9B3E"} onPress={()=>{
-          navigation.goBack()
-      }}/>
-      </View>
+    <SafeAreaView style={styles.mainContainer}>
+      <IconHeader
+				lable2='Search'
+				containerStyle={styles.header}
+					onleftPress={() => {
+					
+					}}
+					leftBtn={
+						<Ionicons
+							size={35}
+							name="menu"
+							color={primaryColor}
+							
+						/>
+					}
+					rightBtn={
+						<Ionicons
+							size={35}
+							name="cart-outline"
+							color={primaryColor}
+							
+						/>
+					}
+				/>
       <InputField
-      containerStyle={{width:'100%',marginHorizontal:0}}
+      containerStyle={{...styles.innerContainer,...styles.elevated}}
+      textInputStyle={styles.mainContainer}
 			lable={'Search by part id'}
-			// isEditable={false}
+			
 			icon={<Ionicons onPress={()=>{
                 setSearchTxt('');
-            }} name="ios-close-circle-sharp" size={20} color={'grey'} />}
-            lefticon={<Ionicons name="search-outline" size={20} color={'grey'} />}
+            }} name="search-outline" size={20} color={'grey'} />}
+            
 			value={searchTxt}
 			onChange={(txt) => {
                 setSearchTxt( txt); 
 			}}
 			/>
-            <View style={{flex:1,alignSelf:'center',width:'100%'}} >
+            <View style={{...styles.innerContainer,flex:1}} >
             <FlatList horizontal={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
             </View>
     </SafeAreaView>
   )
 }
 
+const styles = StyleSheet.create({
+    mainContainer:{
+        flex:1,
+        
+        backgroundColor:'white'
+    },
+	header:{
+		elevation:5,
+		paddingHorizontal:"2%",
+		paddingTop:'1%'
+	},
+    innerContainer:{
+        backgroundColor:white,
+        alignSelf:'center',
+        width:'95%',
+        
+    },
+    ProductView:{ 
+    alignSelf:'center' ,
+    flex:1,
+    width:'100%',
+    marginVertical:'4%'
+    },
+    productLogo:{
+        width:35,
+        height:30
+    },
+    elevated:{
+        elevation:2,
+        borderWidth:0.2
+    },
+    productName:{ 
+        ...headings.h6,
+        left:'60%'
+    },
+    productLogoContainer:{ 
+    alignItems: 'flex-start', 
+    left: 10,
+    flexDirection:'row' 
+}
+	
+});

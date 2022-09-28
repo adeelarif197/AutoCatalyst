@@ -1,11 +1,13 @@
 import { Platform, StyleSheet } from 'react-native';
 
+
 const primaryColor = '#198754'
 const secondryColor = '#FFFFFF'
 const textColor = "#606060"
 const textColorDim = "#BBBBBB"
 const transparent = "#00000000"
 const white = "#FFFFFF"
+const black = "black"
 const dimPrimaryColor = "#F5FFFC"
 
 const normalFont = Platform.OS === "ios" ? "Metropolis-Regular" : "Metropolis-Regular"
@@ -35,6 +37,7 @@ const headings = StyleSheet.create({
     h1: { ...textFont, fontSize: 30, color: textColor },
     h1s: { fontSize: 30, color: textColor, fontFamily:'Hello Valentica Regular'},
     h2: { ...mediumTextFont, fontSize: 24, color: textColor },
+    h2b: { ...boldTextFont, fontSize: 24, color: textColor },
     h3: { ...mediumTextFont, fontSize: 22, color: textColor },
     h4: { ...mediumTextFont, fontSize: 20, color: textColor },
     h4b: { ...boldTextFont, fontSize: 20, color: textColor },
@@ -87,4 +90,4 @@ const shadow = StyleSheet.create({
 })
 
 
-export { textFont, boldTextFont, mediumFont, textColorDim, dimPrimaryColor, secondryColor, white, textColor, stylishFont, mediumTextFont, container, primaryColor, headings, form, shadow, transparent, Colors, }
+export { textFont, boldTextFont, mediumFont, textColorDim, dimPrimaryColor, secondryColor, white, textColor, stylishFont, mediumTextFont, container, primaryColor, headings, form, shadow, transparent, Colors,black }

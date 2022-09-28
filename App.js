@@ -31,6 +31,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ListScreen from './src/auth_screens/ListScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProductScreen from './src/auth_screens/ProductScreen';
+import { Colors, primaryColor } from './src/utils/Styles';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,35 +39,49 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
 	return (
 	  <Tab.Navigator
-	  screenOptions={{headerShown: false}}
+	//   screenOptions={{headerShown: false}}
+	screenOptions={({ route }) => ({
+		tabBarActiveTintColor: primaryColor,
+		tabBarInactiveTintColor: Colors.gray,
+		headerShown:false
+	  })}
+	  
+
 	  >
-		<Tab.Screen name="ListScreen" component={ListScreen} 
+		<Tab.Screen name="ListScreen" component={Services} 
 		options={{
 			tabBarLabel: 'Home',
-			tabBarIcon: ({ color, size }) => (
-			  <Ionicons name="home" color={"#5E9B3E"} size={size} />
+			tabBarIcon: ({ color, size, focused}) => (
+			  <Ionicons name="home" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}
 		/>
-		<Tab.Screen name="History" component={ListScreen} 
+		<Tab.Screen name="Explore" component={ListScreen} 
 		options={{
-			tabBarLabel: 'History',
-			tabBarIcon: ({ color, size }) => (
-			  <Entypo name="back-in-time" color={"#5E9B3E"} size={size} />
+			tabBarLabel: 'Explore',
+			tabBarIcon: ({ focused,color, size }) => (
+			  <Ionicons name="search" color={focused== true? primaryColor: Colors.gray} size={size} />
+			),
+		  }}/>
+		  <Tab.Screen name="Brands" component={ListScreen} 
+		options={{
+			tabBarLabel: 'Brands',
+			tabBarIcon: ({ focused,color, size }) => (
+			  <Entypo name="back-in-time" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}/>
 		<Tab.Screen name="Credits" component={ListScreen} 
 		options={{
 			tabBarLabel: 'Credits',
-			tabBarIcon: ({ color, size }) => (
-			  <Ionicons name="server-sharp" color={"#5E9B3E"} size={size} />
+			tabBarIcon: ({ color, size,focused }) => (
+			  <Ionicons name="server-sharp" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}/>
 		<Tab.Screen name="Profile" component={ListScreen} 
 		options={{
 			tabBarLabel: 'Profile',
-			tabBarIcon: ({ color, size }) => (
-			  <Ionicons name="person-circle-sharp" color={"#5E9B3E"} size={size} />
+			tabBarIcon: ({ color, size,focused}) => (
+			  <Ionicons name="person-circle-sharp" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}/>
 		
@@ -132,7 +147,7 @@ const App = () => {
 	}
 	return (
 		<NavigationContainer>
-			<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Navigator  screenOptions={{ headerShown: false }}>
 				
 				<Stack.Screen name="Splash" component={Splash} />
 				<Stack.Screen name="OnBoardingScreens" component={OnBoardingScreens} />
@@ -142,10 +157,10 @@ const App = () => {
 				<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 				<Stack.Screen name="OTPScreen" component={OTPScreen} />
 				
-				<Stack.Screen name="Home" component={Services} />
+				<Stack.Screen name="Home" component={MyTabs} />
 				
 				<Stack.Screen name="SearchScreen" component={SearchScreen} />
-				<Stack.Screen name="MyTabs" component={MyTabs} />
+				{/* <Stack.Screen name="MyTabs" component={MyTabs} /> */}
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>

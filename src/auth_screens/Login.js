@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { container, headings, primaryColor, Colors, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import languages from '../assets/languages/English.json';

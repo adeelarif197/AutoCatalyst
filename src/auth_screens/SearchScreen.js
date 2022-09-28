@@ -76,6 +76,7 @@ export default function SearchScreen() {
     ////////states for searching Data
     const [searchTxt, setSearchTxt] = useState('');
     const [filterData, setFilterData] = useState('');
+    const [showList, setShowList] = useState(false);
 
 
 
@@ -146,6 +147,8 @@ export default function SearchScreen() {
       <InputField
       containerStyle={{...styles.innerContainer,...styles.elevated}}
       textInputStyle={styles.mainContainer}
+      oninputfocus={()=>{setShowList(true)}}
+      oninputblur={()=>{setShowList(false)}}
 			lable={'Search by part id'}
 			
 			icon={<Ionicons onPress={()=>{
@@ -155,11 +158,19 @@ export default function SearchScreen() {
 			value={searchTxt}
 			onChange={(txt) => {
                 setSearchTxt( txt); 
+                // setShowList(true)
 			}}
 			/>
-            <View style={{...styles.innerContainer,flex:1}} >
-            <FlatList horizontal={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
+
+
+            {/* ////////Conditional rendering to show either Products or Dropdown on SearchScreen .........Penidng */}
+            {
+                showList==true ? (<View style={{...styles.innerContainer,flex:1}} >
+                    <FlatList horizontal={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
+                    </View>): <View style={{...styles.innerContainer,flex:1}} >
+            <Text>Produts will be here</Text>
             </View>
+            }
     </SafeAreaView>
   )
 }

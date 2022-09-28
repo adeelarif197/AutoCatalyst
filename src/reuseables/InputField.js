@@ -32,8 +32,9 @@ export const InputField = forwardRef((props, ref) => {
                 style={{ borderWidth: borderWidth, borderColor: borderColor }}
                 placeholder={props.lable}
                 secureTextEntry={isSecure}
-                onBlur={() => { setborderWidth(0.5); setborderColor(white); setelev(0) }}
-                onFocus={() => { setborderWidth(0); setborderColor(Colors.darkgrey); setelev(8) }}
+                onBlur={() => { setborderWidth(0.5); setborderColor(white); setelev(0), props.oninputblur}}
+                onFocus={() => { setborderWidth(0); setborderColor(Colors.darkgrey); setelev(8); props.oninputfocus }}
+                
                 placeholderTextColor={props.placeholderTextColor ? props.placeholderTextColor : Colors.gray}
                 style={{ ...textFont, backgroundColor: Colors.lightgrey, borderRadius: 8, flex: 1, ...props.textInputStyle }}
                 returnKeyType={props.returnKeyType}

@@ -63,7 +63,7 @@ const Colors = {
     lightGreen: "#F5FFFC",
     redFaded: "rgba(255,0,0,0.4)",
     red: "rgb(155,0,0)",
-    iconColor : "#949494"
+    iconColor : "#198754"
 }
 
 const form = StyleSheet.create({

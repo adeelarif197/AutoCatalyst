@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: 'white',
+		justifyContent:'space-between'
 		
 	},
 	header:{
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
 		borderWidth:0.2,
 		marginTop:'2%',
 		borderRadius:5,
-		padding:5
+		padding:5,
 },
 	metalInternal:{
 		flexDirection:'row',

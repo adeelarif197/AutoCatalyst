@@ -17,7 +17,7 @@ import SignUp from './src/auth_screens/SignUp';
 import ForgotPassword from './src/auth_screens/ForgotPassword';
 import OTPScreen from './src/auth_screens/OTPScreen';
 
-import WelcomeScreen from './src/auth_screens/WelcomeScreen';
+
 
 import SearchScreen from './src/auth_screens/SearchScreen';
 // Home_Screens
@@ -32,6 +32,13 @@ import ListScreen from './src/auth_screens/ListScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProductScreen from './src/auth_screens/ProductScreen';
 import { Colors, primaryColor } from './src/utils/Styles';
+
+
+// Redux
+import {Provider, useSelector} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { persistor, store } from './src/Redux/Store';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -126,6 +133,7 @@ function MyTabs() {
 
 const App = () => {
 	const [ isFirstLaunch, setIsFirstLaunch ] = useState(null);
+	
 	let routeName;
 
 	useEffect(() => {
@@ -146,24 +154,31 @@ const App = () => {
 		routeName = 'Login';
 	}
 	return (
+		<Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
 		<NavigationContainer>
-			<Stack.Navigator  screenOptions={{ headerShown: false }}>
+			<Stack.Navigator   screenOptions={{ headerShown: false }}>
 				
 				<Stack.Screen name="Splash" component={Splash} />
 				<Stack.Screen name="OnBoardingScreens" component={OnBoardingScreens} />
-				<Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+				
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 				<Stack.Screen name="OTPScreen" component={OTPScreen} />
 				
 				<Stack.Screen name="Home" component={MyTabs} />
+				<Stack.Screen name="HomeA" component={Services} />
 				
 				<Stack.Screen name="SearchScreen" component={SearchScreen} />
 				{/* <Stack.Screen name="MyTabs" component={MyTabs} /> */}
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
+		</SafeAreaProvider>
+      </PersistGate>
+    </Provider>
 	);
 };
 export default App;

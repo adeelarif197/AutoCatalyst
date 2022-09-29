@@ -1,13 +1,15 @@
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { InputField } from '../reuseables/InputField';
 import { useNavigation } from '@react-navigation/native';
 import { headings, primaryColor, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
+import ProductsCard from '../reuseables/ProductsCard';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 export default function SearchScreen() {
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
 
 
 
@@ -17,43 +19,50 @@ export default function SearchScreen() {
             id: 1,
             name: 'CAT-0043',
             
-            image: require('../assets/images/Audi.png')
+            image: require('../assets/images/Audi.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 2,
             name: 'CAT 0647',
             
-            image: require('../assets/images/Honda.png')
+            image: require('../assets/images/Honda.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 3,
             name: 'CAT 131 ER-01',
             
-            image: require('../assets/images/BMW.png')
+            image: require('../assets/images/BMW.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 4,
             name: 'CAT 131 ER-23',
             
-            image: require('../assets/images/Nissan.png')
+            image: require('../assets/images/Nissan.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 5,
             name: 'CAT 0642',
             
-            image: require('../assets/images/Mitsubishi.png')
+            image: require('../assets/images/Mitsubishi.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 6,
             name: 'CAT 129L',
             
-            image: require('../assets/images/Hyundai.png')
+            image: require('../assets/images/Hyundai.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         {
             id: 7,
             name: 'CATCZ7458',
             
-            image: require('../assets/images/Chevrolet.png')
+            image: require('../assets/images/Chevrolet.png'),
+            preview: require('../assets/images/pngwing.png')
         },
         // {
         //     id: 9,
@@ -77,6 +86,8 @@ export default function SearchScreen() {
     const [searchTxt, setSearchTxt] = useState('');
     const [filterData, setFilterData] = useState('');
     const [showList, setShowList] = useState(false);
+    ////////RawBottomSheet Ref
+    const refRBSheet = useRef();
 
 
 
@@ -86,7 +97,8 @@ export default function SearchScreen() {
 		return (
 			<View style={styles.ProductView}>
 				<TouchableOpacity
-					onPress={() => {navigation.navigate('Login')}}
+					onPress={() => {setSearchTxt( props.item.name)
+                        setShowList( false)}}
 					style={{  }}
 				>
 					<View style={{ flexDirection: 'row' }}>
@@ -105,6 +117,11 @@ export default function SearchScreen() {
 			</View>
 		);
 	};
+
+
+
+    ///////////Product Card
+    
 
 
     ///////////Filter list when user inputs on the search
@@ -147,8 +164,8 @@ export default function SearchScreen() {
       <InputField
       containerStyle={{...styles.innerContainer,...styles.elevated}}
       textInputStyle={styles.mainContainer}
-      oninputfocus={()=>{setShowList(true)}}
-      oninputblur={()=>{setShowList(false)}}
+      oninputfocus={()=>{setShowList(false)}}
+      oninputblur={()=>{setShowList(true)}}
 			lable={'Search by part id'}
 			
 			icon={<Ionicons onPress={()=>{
@@ -158,7 +175,7 @@ export default function SearchScreen() {
 			value={searchTxt}
 			onChange={(txt) => {
                 setSearchTxt( txt); 
-                // setShowList(true)
+                setShowList(true)
 			}}
 			/>
 
@@ -168,9 +185,25 @@ export default function SearchScreen() {
                 showList==true ? (<View style={{...styles.innerContainer,flex:1}} >
                     <FlatList horizontal={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
                     </View>): <View style={{...styles.innerContainer,flex:1}} >
-            <Text>Produts will be here</Text>
+                    <FlatList horizontal={false} renderItem={ProductsCard} data={searchTxt==''? searchData: filterData} />
             </View>
             }
+
+                        <RBSheet
+                            ref={refRBSheet}
+                            closeOnDragDown={true}
+                            closeOnPressMask={false}
+                            customStyles={{
+                            wrapper: {
+                                backgroundColor: "transparent"
+                            },
+                            draggableIcon: {
+                                backgroundColor: "#000"
+                            }
+                            }}>
+
+                                <Text>Here TYpe The</Text>
+                            </RBSheet>
     </SafeAreaView>
   )
 }
@@ -204,7 +237,7 @@ const styles = StyleSheet.create({
     },
     elevated:{
         elevation:2,
-        borderWidth:0.2
+        // borderWidth:0.2
     },
     productName:{ 
         ...headings.h6,

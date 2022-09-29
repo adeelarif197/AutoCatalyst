@@ -34,6 +34,7 @@
     "react-native-modal": "^13.0.0",
     "react-native-multiple-select": "^0.5.7",
     "react-native-onboarding-swiper": "^1.1.4",
+    "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^2.4.1",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
@@ -42,7 +43,10 @@
     "react-native-swiper": "^1.6.0",
     "react-native-swiper-flatlist": "^3.0.16",
     "react-native-switch-selector": "^2.1.4",
-    "react-native-vector-icons": "^9.1.0"
+    "react-native-vector-icons": "^9.1.0",
+    "react-redux": "^8.0.4",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -117,9 +117,11 @@ export default function Services({navigation}) {
 				
 				
 				{/* //////////will set a flatlist to render data from API */}
+				<ScrollView>
 				<Metals/>
 				<Metals/>
 				<Metals/>
+				</ScrollView>
 				
 				
 				

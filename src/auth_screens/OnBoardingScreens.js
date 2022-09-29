@@ -4,13 +4,20 @@ import React, { Component } from 'react';
 import IconHeader from '../reuseables/IconHeader';
 import { primaryColor, textColorDim } from '../utils/Styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
 
-export default class OnBoardingScreens extends Component {
-	render() {
-		var { width , height } = Dimensions.get('window');
-		const navigation = this.props.navigation;
-		return (
-			<SafeAreaView style={styles.maincontainer}>
+
+
+
+
+export default function OnBoardingScreens({navigation}) {
+	const token = useSelector(state => state.auth.userToken);
+
+	var { width , height } = Dimensions.get('window');
+
+
+  return (
+	<SafeAreaView style={styles.maincontainer}>
 				<IconHeader
 					
 					// onleftPress={() => {
@@ -20,8 +27,8 @@ export default class OnBoardingScreens extends Component {
 				/>
 				<Onboarding
 					bottomBarHighlight={false}
-					onSkip={() => navigation.replace('Home')}
-					onDone={() => navigation.replace('Home')}
+					onSkip={() => {token?  navigation.replace('Home'):navigation.replace('HomeA')}}
+					onDone={() => {token?  navigation.replace('Home'):navigation.replace('HomeA')}}
 					showDone={true}
 					// imageContainerStyles={{backgroundColor:'red'}}
 					subTitleStyles={styles.heading}
@@ -74,8 +81,7 @@ export default class OnBoardingScreens extends Component {
 					]}
 				/>
 			</SafeAreaView>
-		);
-	}
+  )
 }
 
 const styles = StyleSheet.create({

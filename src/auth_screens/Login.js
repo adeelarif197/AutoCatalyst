@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { container, headings, primaryColor, Colors, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
@@ -10,72 +10,61 @@ import { InputField } from '../reuseables/InputField';
 import Btn1 from '../reuseables/Btn1';
 // import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequest } from '../Redux/Actions';
 
 
 
 const myref = React.createRef();
-export default class Login extends Component {
-	state = {
-		email: '',
-		password: '',
-		Pass: '',
-		showPassword: true,
-		emailError: '',
-		isValid: false,
-		passwordErrorMessage: '', // password error message
-		loading: false,
-		authUserID: '',
-		isSubmitting: false
-	};
 
-	storeData = async () => {
-		try {
-			const jsonID = JSON.stringify(this.state.authUserID);
-			const jsonEmail = JSON.stringify(this.state.email);
-			const jsonPassword = JSON.stringify(this.state.Pass);
 
-			await AsyncStorage.setItem('@IDSession', jsonID);
-			console.log('SessionID Stored: ', JSON.parse(jsonID));
 
-			await AsyncStorage.setItem('@emailSession', jsonEmail);
-			console.log('SessionEmail Stored: ', JSON.parse(jsonEmail));
 
-			await AsyncStorage.setItem('@passwordSession', jsonPassword);
-			console.log('SessionPassword Stored: ', JSON.parse(jsonPassword));
-			this.props.navigation.navigate('Services');
-		} catch (e) {
-			// saving error
-		}
-	};
 
-	
 
-	handleValidation = () => {
-		const { email, Pass } = this.state;
-		if (email == '' || Pass == '') {
-			alert('All fields are required');
-			return;
-		}
-		if (email != '' && Pass != '') {
-			this.getFirestorData();
-		}
-		if (Pass.length < 5) {
-			alert('password lenght must be 6 charater long');
-			return;
-		}
-	};
+export default function Login({navigation}) {
+	const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.userToken);
+  const loginErrors = useSelector(state => state.auth.loginErrors);
 
-	toggleSecure = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [mobileCode, setMobileCode] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [emailErrorTxt, setEmailErrorTxt] = useState('');
+  const [passwordErrorTxt, setPasswordErrorTxt] = useState('');
+  const [myLoginError, setMyLoginError] = useState(false);
+
+  const UserLoginFunction = async () => {
+    const params = {username: username,mobileCode: '966', password: password};
+    console.log('loginfun');
+    if (username && password) {
+      dispatch(loginRequest({params, setMyLoginError}));
+    } else {
+      if (!username) {
+        setEmailError(true);
+        setEmailErrorTxt('PhoneNumber is required');
+      }
+      if (!password) {
+        setPasswordError(true);
+        setPasswordErrorTxt('Password is Required');
+      }
+    }
+  };
+
+
+
+
+
+	const toggleSecure = () => {
 		myref.current.toggleSecure();
 	};
-
-	render() {
-		const { isSubmitting } = this.state;
-		return (
-			<View style={container.empty}>
+  return (
+	<View style={container.empty}>
 				<IconHeader
 					onleftPress={() => {
-						this.props.navigation.goBack();
+						navigation.goBack();
 					}}
 					leftBtn={
 						<AntDesign size={25} name="arrowleft" color={primaryColor} style={{ left: 20, top: 20 }} />
@@ -91,23 +80,23 @@ export default class Login extends Component {
 							// keyboardType="numb"
 							lable="Phone Nymber"
 							icon={<Fontisto name="phone" size={20} color={Colors.gray} />}
-							value={this.state.email}
-							onChange={(txt) => this.setState({ email: txt })}
+							value={username}
+							onChange={(txt) =>setUsername(txt)}
 						/>
 
 						<InputField
 							ref={myref}
-							oniconPress={this.toggleSecure}
+							oniconPress={()=>{toggleSecure}}
 							isSecure={true}
 							lable="Password"
 							icon={<Entypo name="eye" size={20} color={Colors.gray} />}
-							value={this.state.Pass}
-							onChange={(txt) => this.setState({ Pass: txt })}
+							value={password}
+							onChange={(txt) =>setPassword(txt)}
 						/>
 
 						<TouchableOpacity
 							onPress={() => {
-								this.props.navigation.navigate('ForgotPassword');
+								navigation.navigate('ForgotPassword');
 							}}
 						>
 							<Text style={{ ...headings.h6, color: primaryColor, textAlign: 'center',}}>
@@ -121,13 +110,13 @@ export default class Login extends Component {
 								lable={languages.login}
 								// onPress={() => alert('asdfasdfasdf')}
 								// onPress={() => }
+								onPress={() => UserLoginFunction()}
 
-								onPress={() => this.props.navigation.navigate('Home')}
+								// onPress={() => navigation.navigate('Home')}
 							/>
 						</View>
 					</View>
 				</ScrollView>
 			</View>
-		);
-	}
+  )
 }

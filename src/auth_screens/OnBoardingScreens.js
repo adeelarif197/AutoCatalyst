@@ -27,8 +27,8 @@ export default function OnBoardingScreens({navigation}) {
 				/>
 				<Onboarding
 					bottomBarHighlight={false}
-					onSkip={() => {token?  navigation.replace('Home'):navigation.replace('HomeA')}}
-					onDone={() => {token?  navigation.replace('Home'):navigation.replace('HomeA')}}
+					onSkip={() => {token?  navigation.replace('Home'):navigation.replace('Home')}}
+					onDone={() => {token?  navigation.replace('Home'):navigation.replace('Home')}}
 					showDone={true}
 					// imageContainerStyles={{backgroundColor:'red'}}
 					subTitleStyles={styles.heading}

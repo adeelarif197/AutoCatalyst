@@ -12,12 +12,14 @@ function* loginRequest(params) {
       verb: 'POST',
     });
 
-    if (res.responseCode !== 200) {
-      console.log('res !== 200 ... ', res);
+    if (res.header.httpStatusCode == 200) {
+      console.log('res !== 200 ... ', res.body);
       params.data.setMyLoginError(true);
       //   yield put({ type: ACTIONS.LOGIN_ERRORS, loginErrors: res });
-    } else if (res.responseCode == 200) {
-      yield put(setLoginData(res.payload));
+      yield put(setLoginData(res.body));
+    } else if (res.responseCode !== 200) {
+      console.log('res.responseCode == 200....', res.body);
+      // yield put(setLoginData(res.body));
     }
   } catch (e) {
     console.log('saga login error -- ', e.toString());

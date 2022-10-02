@@ -10,8 +10,8 @@ const authReducer = (state = initialState, action) => {
     case ACTION_TYPES.SET_LOGIN_DATA:
       return {
         ...state,
-        userToken: action.data.accessToken,
-        userData: action.data.user,
+        userToken: action.data.token,
+        userData: action.data,
       };
 
     case ACTION_TYPES.LOGOUT:

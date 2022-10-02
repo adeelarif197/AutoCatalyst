@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image,SafeAreaView,StyleSheet} from 'react-native';
 import { black, Colors, headings, primaryColor, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { InputField } from '../reuseables/InputField';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ReactModal from '../reuseables/Modal';
+import Login from '../auth_screens/Login';
+import LoginModal from '../reuseables/LoginModal';
 
 
 
 export default function Services({navigation}) {
 	// const navigation = this.props.navigation;
+	const modal = useRef()
 
 	const Metals = ()=>{
 		return(
@@ -45,6 +49,7 @@ export default function Services({navigation}) {
 					}}
 					leftBtn={
 						<Ionicons
+						onPress={()=>modal.current.toggleModal()}
 							size={35}
 							name="menu"
 							color={primaryColor}
@@ -122,6 +127,17 @@ export default function Services({navigation}) {
 				<Metals/>
 				<Metals/>
 				</ScrollView>
+
+
+				{/* ///////////Login Modal */}
+
+				<ReactModal
+				ref={modal}
+				containerStyle={{borderRadius:10}}
+				view={
+					<LoginModal/>
+				}
+				/>
 				
 				
 				

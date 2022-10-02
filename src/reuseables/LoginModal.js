@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../Redux/Actions';
 import CountryPicker from "react-native-country-codes-picker";
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 
 
@@ -23,7 +24,7 @@ const myref = React.createRef();
 
 
 
-export default function Login({navigation}) {
+export default function LoginModal({navigation}) {
 	const dispatch = useDispatch();
   const token = useSelector(state => state.auth.userToken);
   const loginErrors = useSelector(state => state.auth.loginErrors);
@@ -64,15 +65,8 @@ export default function Login({navigation}) {
 		myref.current.toggleSecure();
 	};
   return (
-	<View style={container.empty}>
-				<IconHeader
-					onleftPress={() => {
-						navigation.goBack();
-					}}
-					leftBtn={
-						<AntDesign size={25} name="arrowleft" color={primaryColor} style={{ left: 20, top: 20 }} />
-					}
-				/>
+	<View style={{height:heightPercentageToDP(50),backgroundColor:white}}>
+				
 				<ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
 					<View style={{ alignItems: 'center', marginVertical: 5 }}>
 						<Text style={{ ...headings.h1s, color: primaryColor }}>{languages.login}</Text>

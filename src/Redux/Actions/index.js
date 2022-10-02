@@ -9,5 +9,9 @@ export const setLoginData = data => ({
   type: ACTION_TYPES.SET_LOGIN_DATA,
   data,
 });
+export const logoutUser = data => ({
+  type: ACTION_TYPES.LOGOUT
+  
+});
 
 

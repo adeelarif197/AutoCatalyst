@@ -10,7 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 
 
 export default function ProductsCard(props) {
-    // 
+    
     
   return (
     <View style={styles.ProductView}>

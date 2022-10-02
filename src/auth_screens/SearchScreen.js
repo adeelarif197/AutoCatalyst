@@ -5,11 +5,18 @@ import { InputField } from '../reuseables/InputField';
 import { useNavigation } from '@react-navigation/native';
 import { headings, primaryColor, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
-import ProductsCard from '../reuseables/ProductsCard';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import { widthPercentageToDP as WP, heightPercentageToDP as HP} from 'react-native-responsive-screen';
+import Btn1 from '../reuseables/Btn1';
+import Btn2 from '../reuseables/Btn2';
+import ReactModal from '../reuseables/Modal';
+import LoginModal from '../reuseables/LoginModal';
+import { useDispatch } from 'react-redux';
+import { logout, logoutUser } from '../Redux/Actions';
 
 export default function SearchScreen() {
     // const navigation = useNavigation();
+    const dispatch = useDispatch();
 
 
 
@@ -89,6 +96,94 @@ export default function SearchScreen() {
     ////////RawBottomSheet Ref
     const refRBSheet = useRef();
 
+    ////////Login Modal Ref
+    const modal = useRef();
+
+
+    ////////////Component For Product in Cards
+    const ProductsCard= (props) =>  {
+    
+    
+        return (
+          <View style={styles.ProductView}>
+                      <View
+                          // onPress={() => {navigation.navigate('Login')}}
+                          style={{  }}
+                      >
+                          <View style={{ flexDirection: 'row' }}>
+                              <View style={styles.productLogoContainer}>
+                                  <Image style={styles.productLogo} resizeMode='contain' source={props.item.image} />
+                                  
+                                   
+                              </View>
+      
+                              
+                              <View style={styles.productTitleContainer}>
+                              <Text style={styles.productName}>
+                                  {props.item.name}
+                              </Text>
+                                  <TouchableOpacity
+                                  onPress={() => refRBSheet.current.open()}
+                                //   activeOpacity={1}
+                                  style={styles.helpIcon}>
+                                  <Ionicons
+                                  size={20}
+                                  name="help"
+                                  color={primaryColor}
+                                  
+                              />
+                                  </TouchableOpacity>
+                                  
+                                   
+                              </View>
+                          </View>
+                          <View style={styles.previewContainer}>
+                                  <Image style={styles.productLogo} resizeMode='contain' source={props.item.preview} />
+                                  
+                                   
+                              </View>
+                              <View style={styles.bottonContainer}>
+                              <Btn1
+                                      lableStyle={{ ...headings.h6M, color: primaryColor }}
+                                      lable={'Show Price'}
+                                      containerStyle={styles.bottonStyle}
+                                      onPress={()=>modal.current.toggleModal()}
+                                      // onPress={() => }
+                                    //   onPress={() => console.log(props)}
+      
+                                      // onPress={() => navigation.navigate('Home')}
+                                  />
+                                  <Btn2
+                                      lableStyle={{ ...headings.h6M, color: primaryColor }}
+                                      icon={<Ionicons
+                                          size={20}
+                                          name="heart-outline"
+                                          color={primaryColor}
+                                          
+                                      />}
+                                      containerStyle={styles.bottonIconStyle}
+                                      // onPress={() => alert('asdfasdfasdf')}
+                                      // onPress={() => }
+                                      // 
+      
+                                      // onPress={() => navigation.navigate('Home')}
+                                  />
+                              </View>
+
+                              
+                              <ReactModal
+				ref={modal}
+				containerStyle={{borderRadius:10}}
+				view={
+					<LoginModal/>
+				}
+				/>
+                          
+                      </View>
+                  </View>
+        )
+      }
+
 
 
     ////////////Component for Product in list
@@ -154,9 +249,13 @@ export default function SearchScreen() {
 					}
 					rightBtn={
 						<Ionicons
+                        onPress={()=>{dispatch({
+                            type: 'LOGOUT',
+                          });}}
 							size={35}
 							name="cart-outline"
 							color={primaryColor}
+                            
 							
 						/>
 					}
@@ -183,26 +282,52 @@ export default function SearchScreen() {
             {/* ////////Conditional rendering to show either Products or Dropdown on SearchScreen .........Penidng */}
             {
                 showList==true ? (<View style={{...styles.innerContainer,flex:1}} >
-                    <FlatList horizontal={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
+                    <FlatList horizontal={false} showsVerticalScrollIndicator={false} renderItem={ProductsView} data={searchTxt==''? searchData: filterData} />
                     </View>): <View style={{...styles.innerContainer,flex:1}} >
-                    <FlatList horizontal={false} renderItem={ProductsCard} data={searchTxt==''? searchData: filterData} />
+                    <FlatList horizontal={false} showsVerticalScrollIndicator={false} renderItem={ProductsCard} data={searchTxt==''? searchData: filterData} />
             </View>
             }
 
                         <RBSheet
                             ref={refRBSheet}
+                            
                             closeOnDragDown={true}
                             closeOnPressMask={false}
                             customStyles={{
                             wrapper: {
-                                backgroundColor: "transparent"
+                                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                                
+                            },
+                            container: {
+                                borderTopLeftRadius:15,
+                                borderTopRightRadius:15
                             },
                             draggableIcon: {
-                                backgroundColor: "#000"
+                                
                             }
                             }}>
 
-                                <Text>Here TYpe The</Text>
+                                <Text style={{...headings.h6,alignSelf:'center'}}>Information</Text>
+                                <InputField
+                                    containerStyle={styles.typeInfo}
+                                    textInputStyle={styles.mainContainer}
+                                    oninputfocus={()=>{setShowList(false)}}
+                                    oninputblur={()=>{setShowList(true)}}
+                                    lable={'Type anything to ask....'}
+                                            
+                                    
+                                            
+                                   value={searchTxt}
+                                onChange={(txt) => {
+                                                setSearchTxt( txt); 
+                                                setShowList(true)
+                                            }}
+                                            />
+                                            <Btn1
+								lableStyle={{ ...headings.h5b, color:white }}
+								lable={'Send'}
+							/>
+
                             </RBSheet>
     </SafeAreaView>
   )
@@ -212,7 +337,8 @@ const styles = StyleSheet.create({
     mainContainer:{
         flex:1,
         
-        backgroundColor:'white'
+        backgroundColor:'white',
+        
     },
 	header:{
 		elevation:5,
@@ -223,6 +349,7 @@ const styles = StyleSheet.create({
         backgroundColor:white,
         alignSelf:'center',
         width:'95%',
+        
         
     },
     ProductView:{ 
@@ -247,6 +374,95 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', 
     left: 10,
     flexDirection:'row' 
-}
+},
+typeInfo:{
+    backgroundColor:white,
+    alignSelf:'center',
+    width:'95%',
+    height:HP('18%'),
+    borderWidth:0.2
+
+    },
+    ProductView:{ 
+        alignSelf:'center' ,
+        flex:1,
+        width:WP('90%'),
+        // height:HP('30%'),
+        marginVertical:'2%',
+        // backgroundColor:'red',
+        borderRadius:10,
+        elevation:0.8,
+        padding:WP('3%')
+    
+        },
+        productLogo:{
+           alignSelf:'center'
+        },
+        elevated:{
+            elevation:2,
+            // borderWidth:0.2
+        },
+        productName:{ 
+            ...headings.h6,
+            left:'10%',
+            // alignSelf:'center'
+        },
+        productLogoContainer:{ 
+        alignItems: 'flex-start', 
+        left: 5,
+        flexDirection:'row' ,
+        // backgroundColor:'red',
+        justifyContent:'center',
+        height:HP('7%'),
+        width:HP('7%'),
+        // borderRadius:1000,
+        // borderWidth:0.5
+    
+        
+    },
+    productTitleContainer:{ 
+        alignItems: 'flex-start', 
+        left: 10,
+        flexDirection:'row' ,
+        
+        flex:1,
+        justifyContent:'space-between'
+    },
+    helpIcon:{
+        height:HP('4%'),
+        width:HP('4%'),
+        elevation:0.8,
+        
+        marginRight:WP('2%'),
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:100
+    },
+    previewContainer:{
+        height:HP('20%'),
+        width:WP('80%'),
+        marginRight:WP('2%'),
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+        
+    },
+    bottonStyle:{
+        backgroundColor:white,
+        borderWidth:1,
+        borderColor:primaryColor,
+        // margin:'2%',
+        width:WP('60%'),
+        marginHorizontal:5
+        
+    },
+    bottonIconStyle:{
+        backgroundColor:white,
+        borderWidth:1,
+        borderColor:primaryColor,
+        margin:'2%',
+        width:WP('15%')
+    },
+    bottonContainer:{ flexDirection: 'row',justifyContent:'space-between',marginTop:'2%' }
 	
 });

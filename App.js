@@ -22,6 +22,7 @@ import OTPScreen from './src/auth_screens/OTPScreen';
 import SearchScreen from './src/auth_screens/SearchScreen';
 // Home_Screens
 import Services from './src/home_screens/Services';
+import Credits from './src/home_screens/Credits';
 
 // Drawer_Screens
 
@@ -77,7 +78,7 @@ function MyTabs() {
 			  <Entypo name="back-in-time" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}/>
-		<Tab.Screen name="Credits" component={ListScreen} 
+		<Tab.Screen name="Credits" component={Credits} 
 		options={{
 			tabBarLabel: 'Credits',
 			tabBarIcon: ({ color, size,focused }) => (

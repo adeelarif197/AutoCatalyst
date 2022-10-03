@@ -16,7 +16,7 @@ import { logout, logoutUser } from '../Redux/Actions';
 
 export default function SearchScreen() {
     // const navigation = useNavigation();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
 
 
@@ -173,9 +173,9 @@ export default function SearchScreen() {
                               
                               <ReactModal
 				ref={modal}
-				containerStyle={{borderRadius:10}}
+				// containerStyle={{top:100}}
 				view={
-					<LoginModal/>
+					<LoginModal modelref={modal}/>
 				}
 				/>
                           
@@ -249,9 +249,9 @@ export default function SearchScreen() {
 					}
 					rightBtn={
 						<Ionicons
-                        onPress={()=>{dispatch({
-                            type: 'LOGOUT',
-                          });}}
+                        // onPress={()=>{dispatch({
+                        //     type: 'LOGOUT',
+                        //   });}}
 							size={35}
 							name="cart-outline"
 							color={primaryColor}

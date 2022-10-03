@@ -7,13 +7,18 @@ import OneText from './OneText';
 
 export default class IconTile extends Component {
     render() {
-        const { containerStyle, lable1, lable2, lable1Style, lable2Style, isBorder, icon, iconStyle, onPress } = this.props
+        const {avatar, containerStyle, lable1, lable2, lable1Style, lable2Style, isBorder, icon, iconStyle, onPress } = this.props
         return (
             <TouchableOpacity activeOpacity={0.4} onPress={onPress}>
                 <Animatable.View animation="slideInUp" style={{ ...styles.list, borderBottomColor: !isBorder ? Colors.gray : null, ...containerStyle }}>
+                <View style={{flexDirection:'row'}}>
+                {avatar}
                     <Text style={{ ...styles.t1, ...lable1Style }}>{lable1}</Text>
+                </View>
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{ ...styles.t2, ...lable2Style }}>{lable2}</Text>
                     {icon}
+                    </View>
                 </Animatable.View>
             </TouchableOpacity>
         )

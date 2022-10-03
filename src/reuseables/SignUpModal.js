@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity,StyleSheet } from 'react-native';
 import { container, headings, primaryColor, Colors, white } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
@@ -12,7 +12,9 @@ import Btn1 from '../reuseables/Btn1';
 import Mycheckbox from '../reuseables/Mycheckbox';
 import CountryPicker from "react-native-country-codes-picker";
 import CurrencyPicker from "react-native-currency-picker"
-import { widthPercentageToDP as WP, heightPercentageToDP as HP} from 'react-native-responsive-screen';
+import { widthPercentageToDP as WP, heightPercentageToDP as HP, heightPercentageToDP} from 'react-native-responsive-screen';
+import { useDispatch } from 'react-redux';
+import { signupRequest } from '../Redux/Actions';
 
 
 const myref = React.createRef();
@@ -20,22 +22,106 @@ const myref1 = React.createRef();
 
 
 
+// let currencyPickerRef = undefined;
+ 
+// // use currencyPickerRef
+// currencyPickerRef.open();
+// currencyPickerRef.close();
+
+// export default class Registration extends Component {
+	
+
+	
+
+// 	// signUpValidation = () => {
+// 	// 	const { email, Pass } = this.state;
+// 	// 	if (email == '' || Pass == '') {
+// 	// 		alert('All fields are required');
+// 	// 		return;
+// 	// 	} else if (email != '' && email.includes('@gmail.com') && Pass != '') {
+// 	// 		// this.PostDataToFirebase();
+// 	// 	} else {
+// 	// 		// } else if (Pass ){
+// 	// 		//   alert('password lenght must be 8 charaters long');
+// 	// 		//   return;
+// 	// 		// }
+// 	// 		// else if (Pass.length <= 8 ) {
+// 	// 		//   alert('password lenght must be 8 charaters long');
+// 	// 		//   return;
+// 	// 		// }
+// 	// 		alert('Not a valid email');
+// 	// 		return;
+// 	// 	}
+// 	// };
+
+	
+
+// 	render() {
+// 		const { isSubmitting, isPolicyChecked } = this.state;
+// 		return (
+			
+// 		);
+// 	}
+// }
 
 
 
-export default function SignUp({navigation}) {
+
+
+export default function SignUpModal({navigation}) {
+    const dispatch = useDispatch();
 	const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [mobileCode, setMobileCode] = useState('');
   const [number, setNumber] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState('');
-  const [passwordErrorTxt, setPasswordErrorTxt] = useState('');
+  const [countryNameCode, setCountryNameCode] = useState('');
+  const [countryName, setCountryName] = useState('');
   const [isPolicyChecked, setIsPolicyChecked] = useState(false);
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+966');
   const [currencyCode, setCurrencyCode] = useState('SAR');
   const [countryFlag, setCountryFlag] = useState('🇸🇦');
+  const [myLoginError, setMyLoginError] = useState(false);
+
+  const UserLoginFunction = async () => {
+    
+
+	  
+
+
+    const params = {
+        mobileCode: "966" ,
+    countryCode : countryNameCode,
+    countryEn : countryName,
+    fullNameEn : fullname,
+    defCurrency : currencyCode,
+    password : password
+};
+    console.log('SignUpFun', password);
+    if (fullname && password) {
+        console.log('SignUpFun2');
+      dispatch(signupRequest({params, setMyLoginError}));
+    } else {
+      if (!fullname) {
+        // setEmailError(true);
+        // setEmailErrorTxt('PhoneNumber is required');
+      }
+      if (!password) {
+        // setPasswordError(true);
+        // setPasswordErrorTxt('Password is Required');
+      }
+    }
+  };
+
+  useEffect(() => {
+    
+  
+    return () => {
+      
+    }
+  }, [myLoginError])
+  
 
 
 
@@ -45,7 +131,7 @@ export default function SignUp({navigation}) {
 	};
 
   return (
-	<View style={container.empty}>
+	<View style={{flex:1,alignItems:'center',backgroundColor:'white',borderRadius:10,top:heightPercentageToDP(10)}}>
 				
 				<ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
 					<View style={{ alignItems: 'center', marginVertical: 5 }}>
@@ -68,7 +154,10 @@ export default function SignUp({navigation}) {
 								// myref2.current.open()
 							  }}>{countryFlag} {countryCode}</Text>}
 							icon={<Feather name="phone" size={20} color={Colors.gray} />}
-							
+							// value={this.state.lastname}
+							// onChange={(txt) => {
+							// 	this.setState({ lastname: txt });
+							// }}
 						/>
 						<CountryPicker
         show={show}
@@ -76,6 +165,8 @@ export default function SignUp({navigation}) {
         pickerButtonOnPress={(item) => {
           setCountryCode(item.dial_code);
 		  setCountryFlag(item.flag)
+          setCountryNameCode(item.code)
+          setCountryName(item.name.en)
 		  console.log('here.....', item);
           setShow(false);
         }}
@@ -83,7 +174,7 @@ export default function SignUp({navigation}) {
 	  
 					
 
-						
+						{/* <InputField keyboardType="phone-pad" ref={myref} oniconPress={this.toggleSecure} lable="Phone Number" icon={<AntDesign name="phone" size={20} color={Colors.gray} />} /> */}
 
 						<InputField
 							ref={myref1}
@@ -91,7 +182,10 @@ export default function SignUp({navigation}) {
 							isSecure={true}
 							lable="Password"
 							icon={<Feather name="lock" size={20} color={Colors.gray} />}
-							
+							// value={this.state.Pass}
+							onChange={(txt) => {
+								setPassword(txt)
+							}}
 						/>
 
 						<InputField
@@ -100,7 +194,10 @@ export default function SignUp({navigation}) {
 							oniconPress={() => toggleSecure(myref)}
 							lable="Confirm Password"
 							icon={<Feather name="lock" size={20} color={Colors.gray} />}
-							
+							// value={this.state.confirmPassword}
+							onChange={(txt) => {
+								setPassword(txt)
+							}}
 						/>
 						<View style={{  ...styles.container }}>
 					<CurrencyPicker
@@ -158,9 +255,9 @@ export default function SignUp({navigation}) {
 							<Btn1
 								lableStyle={{ ...headings.h6M, color: white }}
 								lable={languages.register}
-								// onPress={() => {
-								// 	this.signUpValidation()
-								// }}
+								onPress={
+									UserLoginFunction
+								}
 							/>
 						</View>
 					</View>

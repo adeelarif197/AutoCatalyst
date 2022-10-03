@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { container, headings, primaryColor, Colors, white } from '../utils/Styles';
+import { Text, View, ScrollView, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import { container, headings, primaryColor, Colors, white, textColor } from '../utils/Styles';
 import IconHeader from '../reuseables/IconHeader';
 import languages from '../assets/languages/English.json';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -38,9 +38,10 @@ export default function Login({navigation}) {
   const [myLoginError, setMyLoginError] = useState(false);
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+966');
+  const [countryFlag, setCountryFlag] = useState('🇸🇦');
 
   const UserLoginFunction = async () => {
-    const params = {username: username,mobileCode: '966', password: password};
+    const params = {username: username,mobileCode: countryCode, password: password};
     console.log('loginfun');
     if (username && password) {
       dispatch(loginRequest({params, setMyLoginError}));
@@ -65,15 +66,12 @@ export default function Login({navigation}) {
 	};
   return (
 	<View style={container.empty}>
-				<IconHeader
-					onleftPress={() => {
-						navigation.goBack();
-					}}
-					leftBtn={
-						<AntDesign size={25} name="arrowleft" color={primaryColor} style={{ left: 20, top: 20 }} />
-					}
-				/>
+				
 				<ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+					{/* /////////////Logo */}
+				<View style={styles.item}>
+					<Image resizeMode='contain' style={{height:'65%',width:'100%'}} source={require('../assets/images/CP.png')} />
+				</View>
 					<View style={{ alignItems: 'center', marginVertical: 5 }}>
 						<Text style={{ ...headings.h1s, color: primaryColor }}>{languages.login}</Text>
 					</View>
@@ -85,7 +83,7 @@ export default function Login({navigation}) {
 							// keyboardType="numb"
 							lefticon={<Text onPress={() => {
 								setShow(true);
-							  }}>{countryCode}</Text>}
+							  }}>{countryFlag} {countryCode}</Text>}
 							lable="Phone Nymber"
 							icon={<Fontisto name="phone" size={20} color={Colors.gray} />}
 							value={username}
@@ -96,6 +94,7 @@ export default function Login({navigation}) {
         // when picker button press you will get the country object with dial code
         pickerButtonOnPress={(item) => {
           setCountryCode(item.dial_code);
+		  setCountryFlag(item.flag)
           setShow(false);
         }}
       />
@@ -132,6 +131,21 @@ export default function Login({navigation}) {
 								// onPress={() => navigation.navigate('Home')}
 							/>
 						</View>
+
+						
+							<Text style={{ ...headings.h6, color: textColor, textAlign: 'center',}}>
+								{languages.dontaccount}
+							</Text>
+							<TouchableOpacity
+							onPress={() => {
+								navigation.navigate('SignUp');
+							}}
+						>
+							<Text style={{ ...headings.h6, color: primaryColor, textAlign: 'center',}}>
+								{languages.register}
+							</Text>
+						</TouchableOpacity>
+						
 					</View>
 				</ScrollView>
 
@@ -139,3 +153,18 @@ export default function Login({navigation}) {
 			</View>
   )
 }
+
+const styles = StyleSheet.create({
+	
+	item: {
+		// flex: 1,
+		justifyContent: 'center',
+		// alignItems: 'center',
+		height:'20%',
+		width:'40%',
+		alignSelf:'center'
+		
+	},
+
+
+});

@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ReactModal from '../reuseables/Modal';
 import Login from '../auth_screens/Login';
 import LoginModal from '../reuseables/LoginModal';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 
 
@@ -15,20 +16,20 @@ export default function Services({navigation}) {
 	// const navigation = this.props.navigation;
 	const modal = useRef()
 
-	const Metals = ()=>{
+	const Metals = (props)=>{
 		return(
 			<View style={styles.metalcontainer}>
 					<View style={styles.metalCircle}>
-					<Text style={{ ...headings.h2b,...styles.metalname}}>
-					PT
+					<Text style={{ ...headings.h6,...styles.metalname}}>
+					{props.title}
 					</Text>
 					</View>
 					<View style={styles.metalInternal}>
-					<Text style={{...headings.h5M }}>
-					SAR 274.68
+					<Text style={{...headings.h7 }}>
+					{props.rate}
 					</Text>
-					<Text style={{...headings.h5}}>
-					03H03M
+					<Text style={{...headings.h8M}}>
+					{props.time}
 					</Text>
 					</View>
 
@@ -73,7 +74,7 @@ export default function Services({navigation}) {
 
 
 
-				<View style={{  alignItems: 'center',width:'70%' ,alignSelf:'center'}}>
+				<View style={styles.subTitleContainer}>
 					<Text style={styles.title}>
 					Search Catalytic Converters for price.
 					</Text>
@@ -103,18 +104,18 @@ export default function Services({navigation}) {
 				/>
 				</TouchableOpacity>
 			
-					<Text style={{ ...headings.h7,...styles.exampleContainer }}>
+					<Text style={{ ...headings.h8,...styles.exampleContainer }}>
 					Example: 123421, TR PSA K494 etc.
 					</Text>
 					
 					
 				
-				<View style={{  marginTop:'2%',alignItems: 'center',width:'80%' ,alignSelf:'center',flexDirection:'row',justifyContent:'space-between'}}>
-					<View style={{width:'25%',borderBottomWidth:1}} />
-					<Text style={{ ...headings.h2b,...styles.highlight}}>
+				<View style={styles.divider}>
+					<View style={styles.dividerBar} />
+					<Text style={{ ...headings.h4b,...styles.highlight}}>
 					Metal Prices
 					</Text>
-					<View style={{width:'25%',borderBottomWidth:1}} />
+					<View style={styles.dividerBar} />
 					
 					
 				</View>
@@ -123,9 +124,9 @@ export default function Services({navigation}) {
 				
 				{/* //////////will set a flatlist to render data from API */}
 				<ScrollView>
-				<Metals/>
-				<Metals/>
-				<Metals/>
+				<Metals title='Pt' rate='SAR 112.28' time='03h:02m'/>
+				<Metals title='Pd' rate='SAR 274.68' time='03h:02m'/>
+				<Metals title='Rh' rate='SAR 1655.60' time='03h:02m'/>
 				</ScrollView>
 
 
@@ -169,13 +170,14 @@ const styles = StyleSheet.create({
 		
 	},
 	title:{
-		 ...headings.h4b ,
+		 ...headings.h5b ,
 		 textAlign:'center',
 		 color:black
 		},
 	discribtion:{
-		 ...headings.h6,
-		 textAlign:'center'
+		 ...headings.h7M,
+		 textAlign:'center',
+		 color:Colors.gray
 	},
 	highlight:{
 		color: primaryColor,
@@ -188,23 +190,26 @@ const styles = StyleSheet.create({
 	discContainer:{
 	marginTop:'3%',
 	alignItems: 'center',
-	width:'85%',
+	width:'90%',
 	alignSelf:'center'
 },
 	exampleContainer:{
 		alignItems: 'center',
 		width:'70%' ,
 		alignSelf:'center',
-		textAlign:'center'
+		textAlign:'center',
+		// color:Colors.lightgrey,
+		marginVertical:'2%'
 },
 	metalcontainer:{
 		flexDirection:'row',
 		width:'95%',
 		alignSelf:'center',
-		borderWidth:0.2,
+		borderWidth:1,
 		marginTop:'2%',
 		borderRadius:5,
 		padding:5,
+		borderColor:Colors.lightgrey
 },
 	metalInternal:{
 		flexDirection:'row',
@@ -236,6 +241,24 @@ const styles = StyleSheet.create({
         
         backgroundColor:'white'
     },
+	divider:{  
+		marginTop:'2%',
+		alignItems: 'center',
+		width:'80%' ,
+		alignSelf:'center',
+		flexDirection:'row',
+		justifyContent:'space-between'
+	},
+	dividerBar:{
+		width:'25%',
+		borderBottomWidth:1,
+		borderColor:Colors.gray
+	},
+	subTitleContainer:{
+		  alignItems: 'center',
+		  width:widthPercentageToDP(60) ,
+		  alignSelf:'center'
+		}
 
 
 });

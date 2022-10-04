@@ -41,6 +41,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import { persistor, store } from './src/Redux/Store';
 import Profile from './src/home_screens/Profile';
+import Brands from './src/home_screens/Brands';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,14 +66,14 @@ function MyTabs() {
 			),
 		  }}
 		/>
-		<Tab.Screen name="Explore" component={ListScreen} 
+		<Tab.Screen name="Explore" component={SearchScreen} 
 		options={{
 			tabBarLabel: 'Explore',
 			tabBarIcon: ({ focused,color, size }) => (
 			  <Ionicons name="search" color={focused== true? primaryColor: Colors.gray} size={size} />
 			),
 		  }}/>
-		  <Tab.Screen name="Brands" component={ListScreen} 
+		  <Tab.Screen name="Brands" component={Brands} 
 		options={{
 			tabBarLabel: 'Brands',
 			tabBarIcon: ({ focused,color, size }) => (

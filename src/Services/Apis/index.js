@@ -12,6 +12,7 @@ export const ApiCall = async ({params, route, verb}) => {
       },
       body: JSON.stringify(params),
       // body: params,
+      
     };
 
     let response = await fetch(url, options);
